@@ -8,15 +8,20 @@ const userRouter = express.Router();
 
 userRouter.get("/auth", auth, (req: any, res: Response) => {
   // console.log("auth section");
-  // console.log(req.user); // pw, token은 우선 놔둔다
-  res.json({
+  console.log(req.user); // pw, token은 우선 놔둔다
+  return res.json({
     id: req.user.id,
     isAuth: true,
     email: req.user.email,
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
+    name: req.user.name,
+    modelName: req.user.modelName,
+    schoolName: req.user.schoolName,
+    dept: req.user.dept,
+    phone: req.user.phone,
     createdAt: req.user.createdAt,
     updatedAt: req.user.updatedAt,
+    success: true,
+    // ...req.user,
   });
 });
 
@@ -30,6 +35,7 @@ userRouter.post("/register", async (req: any, res) => {
         success: false,
       });
     }
+    console.log(req.body);
     const newUser = await User.create({ ...req.body });
     const userRepository = getRepository(User);
     await userRepository.save(newUser);
@@ -95,6 +101,31 @@ userRouter.get("/logout", auth, async (req: any, res) => {
       success: true,
     });
   } catch (err) {
+    return res.json({
+      success: false,
+      err,
+    });
+  }
+});
+
+userRouter.post("/contact", auth, async (req: any, res) => {
+  try {
+    const { id } = req.user;
+
+    const user = await User.findOne({ id });
+    user.modelName = req.body.modelName;
+    user.schoolName = req.body.schoolName;
+    user.dept = req.body.dept;
+    user.phone = req.body.phone;
+
+    const userRepository = getRepository(User);
+    await userRepository.save(user);
+
+    return res.json({
+      success: true,
+    });
+  } catch (err) {
+    console.log(err);
     return res.json({
       success: false,
       err,

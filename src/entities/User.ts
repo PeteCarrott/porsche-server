@@ -22,11 +22,8 @@ class User extends BaseEntity {
   @IsEmail()
   email: string | null;
 
-  @Column({ type: "text" })
-  firstName: string;
-
-  @Column({ type: "text" })
-  lastName: string;
+  @Column({ type: "text", nullable: true })
+  name: string;
 
   @Column({ type: "text", nullable: true })
   password: string;
@@ -34,12 +31,20 @@ class User extends BaseEntity {
   @Column({ type: "text", nullable: true })
   token: string;
 
+  @Column({ type: "text", nullable: true })
+  modelName: string;
+
+  @Column({ type: "text", nullable: true })
+  schoolName: string;
+
+  @Column({ type: "text", nullable: true })
+  dept: string;
+
+  @Column({ type: "text", nullable: true })
+  phone: string;
+
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;
-
-  get fullName(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
 
   @BeforeInsert()
   @BeforeUpdate()
