@@ -18,8 +18,8 @@ class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "text", nullable: true })
   @IsEmail()
+  @Column({ type: "text", nullable: true })
   email: string | null;
 
   @Column({ type: "text", nullable: true })
@@ -46,8 +46,8 @@ class User extends BaseEntity {
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;
 
+  // beforeupdate조심
   @BeforeInsert()
-  @BeforeUpdate()
   async savePassword(): Promise<void> {
     if (this.password) {
       const hashedPassword = await this.hashPassword(this.password);

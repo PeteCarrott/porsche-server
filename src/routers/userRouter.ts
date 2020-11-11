@@ -7,8 +7,7 @@ import { createJWT } from "../utils/createJWT";
 const userRouter = express.Router();
 
 userRouter.get("/auth", auth, (req: any, res: Response) => {
-  // console.log("auth section");
-  console.log(req.user); // pw, token은 우선 놔둔다
+  // console.log("req.user", req.user);
   return res.json({
     id: req.user.id,
     isAuth: true,
@@ -62,6 +61,7 @@ userRouter.post("/login", async (req: any, res) => {
     }
     // console.log(user);
     const checkPassword = await user.comparePassword(password);
+    console.log(checkPassword);
     if (checkPassword) {
       const token = createJWT(user.id);
       console.log(token);
@@ -85,7 +85,7 @@ userRouter.post("/login", async (req: any, res) => {
 });
 
 userRouter.get("/logout", auth, async (req: any, res) => {
-  console.log(req.user);
+  console.log("logout", req.user);
   const { id } = req.user;
   try {
     const user = await User.findOne({ id });

@@ -1,10 +1,3 @@
-// import * as dotenv from "dotenv";
-// dotenv.config({ path: __dirname + "/.env" });
-// require("dotenv").config({ path: __dirname + "/.env" });
-// import "dotenv/config";
-// import { config } from "dotenv";
-// import { resolve } from "path";
-// config({ path: resolve(__dirname, ".env") });
 import "reflect-metadata";
 import express, { Application } from "express";
 import userRouter from "./routers/userRouter";
@@ -23,7 +16,6 @@ createConnection()
   .then(async (connection) => {
     console.log("db connected!!");
     const app: Application = express();
-    console.log(process.env.PORT);
 
     app.use(cors());
     app.use(morgan("dev"));

@@ -7,24 +7,14 @@ export const auth = async (
   next: NextFunction
 ): Promise<void> => {
   const token = req.cookies.x_jwt;
-  if (!token) {
-    req.user = undefined;
+  const user = await decodeJWT(token);
+  if (!user) {
     res.json({
       isAuth: false,
       error: true,
     });
   }
-  if (token) {
-    const user = await decodeJWT(token);
-    if (user) {
-      req.user = user;
-      next();
-    } else {
-      req.user = undefined;
-      res.json({
-        isAuth: false,
-        error: true,
-      });
-    }
-  }
+  req.token = token;
+  req.user = user;
+  next();
 };
