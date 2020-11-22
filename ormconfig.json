@@ -4,7 +4,7 @@
   "port": 5432,
   "synchronize": true,
   "logging": true,
-  "username": "minsukim",
+  "username": "postgres",
   "password": "1234",
   "database": "porsche",
   "entities": ["src/entities/**/*.*"]

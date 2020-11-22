@@ -1,3 +1,11 @@
-# 포르쉐
+# PORSCHE (website clone coding)
 
-웹사이트 클론코딩
+## 사용기술
+
+- Node.js
+- postgreSQL
+- typeORM
+
+## How to use?
+
+`yarn dev`
